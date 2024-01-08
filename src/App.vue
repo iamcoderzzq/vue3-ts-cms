@@ -1,16 +1,28 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="hello vue+ts" />
+  <div>
+    <h2>{{ $store.state.name }}</h2>
+    <h2>{{ store1.state.name }}</h2>
+    <h2>{{ shen }}</h2>
+    <router-link to="login">login</router-link>
+    <router-link to="main">main</router-link>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'App',
-  components: {
-    HelloWorld
+  components: {},
+  setup() {
+    const store1 = useStore()
+    const shen = 9
+    return {
+      store1,
+      shen
+    }
   }
 })
 </script>
