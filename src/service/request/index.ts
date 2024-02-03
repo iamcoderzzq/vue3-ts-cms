@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
+import type { AxiosInstance } from 'axios'
 import { MyInterceptors, MyAxiosConfig, MyRequestConfig } from './type'
 
 import { ElLoading } from 'element-plus'
@@ -40,11 +40,11 @@ class MyRequset {
         this.loadingInstance?.close()
         if (res.data.returnCode === '-1001') {
           console.log('请求失败')
-          return new Promise((a, b) => {
-            b('err')
+          return new Promise((resolve, reject) => {
+            reject('err')
           })
         } else {
-          return res
+          return res.data
         }
       },
       (err) => {

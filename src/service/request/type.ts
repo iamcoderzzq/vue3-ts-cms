@@ -1,9 +1,4 @@
-import type {
-  InternalAxiosRequestConfig,
-  AxiosResponse,
-  CreateAxiosDefaults,
-  AxiosRequestConfig
-} from 'axios'
+import type { InternalAxiosRequestConfig, AxiosResponse, CreateAxiosDefaults } from 'axios'
 export interface MyInterceptors<T = AxiosResponse> {
   requsetInterceptor?: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig
   requsetInterceptorCatch?: (error: any) => any

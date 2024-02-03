@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h2>{{ $store.state.name }}</h2>
-  </div>
+  <div>nav-info</div>
 </template>
 
 <script lang="ts">
@@ -13,4 +11,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less"></style>
+<style lang="less" scoped></style>
