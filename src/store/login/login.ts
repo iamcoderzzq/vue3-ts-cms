@@ -10,7 +10,7 @@ import localCache from '@/utils/cache'
 
 import router from '@/router'
 
-import { menuMapToRoutes } from '@/utils/mapMemu'
+import { menuMapToRoutes, menuMapToPermissions } from '@/utils/mapMemu'
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
@@ -18,7 +18,8 @@ const loginModule: Module<ILoginState, IRootState> = {
     return {
       token: '',
       userInfo: '',
-      userMenus: []
+      userMenus: [],
+      permissions: []
     }
   },
   mutations: {
@@ -30,14 +31,18 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
+      //动态添加路由
       const routes = menuMapToRoutes(userMenus)
       routes.forEach((route) => {
         router.addRoute('main', route)
       })
+      //获取权限数组
+      const permissions = menuMapToPermissions(userMenus)
+      state.permissions = permissions
     }
   },
   actions: {
-    async accountToLogin({ commit }, account: Account) {
+    async accountToLogin({ commit, dispatch }, account: Account) {
       // 1.用户登录
       const result = await accountLoginRequest(account)
       const { id, token } = result.data
@@ -47,17 +52,21 @@ const loginModule: Module<ILoginState, IRootState> = {
       const userInfo = await getUserInfoById(id)
       commit('changeUserInfo', userInfo.data)
       localCache.setCache('userInfo', userInfo.data)
-      //3.获取用户角色
+      //3.获取用户菜单
       const userMenus = await getUserMemu(userInfo.data.role.id)
       commit('changeUserMenus', userMenus.data)
       localCache.setCache('userMenus', userMenus.data)
-      //4.跳转首页
+      //4.获取所有角色 部门列表 菜单列表（用于点击新建按钮时的select选项）
+      dispatch('getInitialData', null, { root: true })
+      //5.跳转首页
       router.push('/main')
     },
-    loadLocalCache({ commit }) {
+    loadLocalCache({ commit, dispatch }) {
       const token = localCache.getCache('token')
       if (token) {
         commit('changeToken', token)
+        //获取所有角色 部门列表 菜单列表（用于点击新建按钮时的select选项）
+        dispatch('getInitialData', null, { root: true })
       }
       const userInfo = localCache.getCache('userInfo')
       if (userInfo) {

@@ -4,14 +4,17 @@ interface IOption {
   label: string
 }
 export interface IFormItem {
+  field: string
   type: IItemType
   label: string
+  rules?: any[]
   placeholder?: string
   options?: IOption[]
   otherOptions?: any
+  isHidden?: boolean
 }
-
 export interface IForm {
+  title?: string
   formItems: IFormItem[]
   labelWidth?: string
   itemStyle?: any

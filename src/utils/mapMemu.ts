@@ -75,4 +75,34 @@ export const pathMapToBreadcrumb = (userMenus: any[], currentPath: string): any 
 //     }
 //   }
 // }
+
+export const menuMapToPermissions = (userMenus: any[]) => {
+  const permissions: string[] = []
+  const recursionPermission = (userMenus: any[]) => {
+    for (const menu of userMenus) {
+      if (menu.type !== 3) {
+        recursionPermission(menu.children ?? [])
+      } else {
+        permissions.push(menu.permission)
+      }
+    }
+  }
+  recursionPermission(userMenus)
+  return permissions
+}
+
+export const menuMapToCheckedLeaf = (menuList: any[]) => {
+  const checkedLeaf: number[] = []
+  const recursionTree = (menuList: any[]) => {
+    for (const menu of menuList) {
+      if (menu.children) {
+        recursionTree(menu.children ?? [])
+      } else {
+        checkedLeaf.push(menu.id)
+      }
+    }
+  }
+  recursionTree(menuList)
+  return checkedLeaf
+}
 export { firstMenu }

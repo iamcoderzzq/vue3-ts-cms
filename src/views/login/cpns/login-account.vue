@@ -33,7 +33,7 @@ export default defineComponent({
       ],
       password: [
         { required: true, trigger: 'blur', message: '请输入密码~' },
-        { pattern: /^[0-9a-z)]{5,16}$/, trigger: 'blur', message: '账号为5到8位的数字或字母~' }
+        { pattern: /^[0-9a-z)]{5,16}$/, trigger: 'blur', message: '账号为5到16位的数字或字母~' }
       ]
     }
     const accountForm = ref<InstanceType<typeof ElForm>>()

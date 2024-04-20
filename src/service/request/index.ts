@@ -19,7 +19,6 @@ class MyRequset {
     //全局拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        console.log('全局拦截器:请求拦截')
         if (this.isLoading) {
           this.loadingInstance = ElLoading.service({
             lock: true,
@@ -49,8 +48,9 @@ class MyRequset {
       },
       (err) => {
         this.loadingInstance?.close()
-        if (err.response.status === 404) {
+        if (err.response?.status === 404) {
           console.log('404~')
+          return err
         } else {
           return err
         }
@@ -68,7 +68,7 @@ class MyRequset {
     )
   }
 
-  request<T>(config: MyRequestConfig<T>): Promise<T> {
+  request<T = any>(config: MyRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       // if (config.isLoading === false) {
       this.isLoading = config.isLoading
@@ -83,30 +83,30 @@ class MyRequset {
             res = config.interceptors?.responseInterceptor(res)
           }
           this.isLoading = DEFAULT_LOADING
-          console.log(res)
-
           resolve(res)
         })
         .catch((err) => {
           this.isLoading = DEFAULT_LOADING
+          console.log('err!!', err)
+
           reject(err)
         })
     })
   }
 
-  get<T>(config: MyRequestConfig<T>): Promise<T> {
+  get<T = any>(config: MyRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'GET' })
   }
 
-  post<T>(config: MyRequestConfig<T>): Promise<T> {
+  post<T = any>(config: MyRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'POST' })
   }
 
-  put<T>(config: MyRequestConfig<T>): Promise<T> {
-    return this.request<T>({ ...config, method: 'PUT' })
+  patch<T = any>(config: MyRequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'PATCH' })
   }
 
-  delete<T>(config: MyRequestConfig<T>): Promise<T> {
+  delete<T = any>(config: MyRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'DELETE' })
   }
 }

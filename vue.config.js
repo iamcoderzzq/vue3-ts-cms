@@ -17,6 +17,14 @@ module.exports = defineConfig({
         },
         ws: true,
         changeOrigin: true
+      },
+      '/imgupload': {
+        target: 'https://postimages.org/',
+        pathRewrite: {
+          '^/imgupload': ''
+        },
+        ws: true,
+        changeOrigin: true
       }
     }
   },

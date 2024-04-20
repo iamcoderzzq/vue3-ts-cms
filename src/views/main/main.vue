@@ -7,7 +7,9 @@
       <el-container>
         <el-header><nav-header @change-menu-status="handleMenuStatus" /></el-header>
         <el-main class="content">
-          <router-view></router-view>
+          <div class="main">
+            <router-view></router-view>
+          </div>
         </el-main>
       </el-container>
     </el-container>

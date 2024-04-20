@@ -1,16 +1,21 @@
 <template>
   <div class="chat">
-    <h2>chat</h2>
+    <my-editor v-model:value="htmlString"></my-editor>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import MyEditor from '@/base-ui/editor'
 
 export default defineComponent({
   name: 'chat',
+  components: {
+    MyEditor
+  },
   setup() {
-    return {}
+    const htmlString = ref<string>('say your story~')
+    return { htmlString }
   }
 })
 </script>

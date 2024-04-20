@@ -32,7 +32,7 @@ const router = createRouter({
 router.beforeEach((to) => {
   if (to.path != '/login') {
     if (!localCache.getCache('token')) {
-      router.push('/login')
+      return '/login'
     }
   }
 

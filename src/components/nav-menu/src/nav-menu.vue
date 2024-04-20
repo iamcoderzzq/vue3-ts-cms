@@ -48,7 +48,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { firstMenu, pathMapToMenu } from '@/utils/mapMemu'
 
 export default defineComponent({
-  name: '',
+  name: 'nav-menu',
   components: {},
   props: {
     isCollapse: {

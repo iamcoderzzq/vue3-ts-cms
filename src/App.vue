@@ -1,16 +1,20 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <el-config-provider :locale="zhCn">
+      <router-view></router-view>
+    </el-config-provider>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+
 export default defineComponent({
   name: 'App',
   components: {},
   setup() {
-    return {}
+    return { zhCn }
   }
 })
 </script>
